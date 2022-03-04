@@ -1,142 +1,117 @@
+let rock = document.querySelector(".rock");
+rock.addEventListener("click",function (){
+    playRound("rock");
+});
+
+let paper = document.querySelector(".paper");
+paper.addEventListener("click",function (){
+    playRound("paper");
+});
+
+let scissors = document.querySelector(".scissors");
+scissors.addEventListener("click",function (){
+    playRound("scissors");
+});
+
+let result = document.querySelector(".result");
+
+//for game function
+let userBalance = 0;
+let computerBalance = 0;
+
 let elements = ["rock","paper","scissors"];
 
-game();
-//checkWinner();
-
-//console.log(playRound());
-//console.log(game());
-//console.log(game(playRound()))
 
 //generate random play
 function computerPlay(){
     let index = Math.floor(Math.random()*3);
     //choose the computer selection from elments array based on random number
     let compPlay = elements[index];
-    console.log("computerSelection: "+compPlay);
     return compPlay;
 }
 
 //a function that plays a single round of Rock Paper Scissors
-//function playRound(counter)
-function playRound(){
-    let playerSelection = prompt("Rock or Paper or Scissors ?");
-    console.log("player: "+playerSelection);
-    let computerSelection = computerPlay();
-
+function playRound(player){
     let userCounter = 0;
     let computerCounter = 0;
 
-    //let counter;
+    let playerSelection = player;
+    let computerSelection = computerPlay();
+
     //compare player's play to computer play
-    switch(playerSelection.toLowerCase()){
+    switch(playerSelection){
         case "rock": {
             if (computerSelection == "rock"){
-                console.log("draw!!");
-                //counter = counter;
                 userCounter = userCounter;
                 computerCounter = computerCounter;
             }
             else if(computerSelection == "paper") {
-                console.log("You Loose!!");
-                //counter--;
                 computerCounter++;
             }
             else if(computerSelection == "scissors") {
-                console.log("You Win!!");
-                //counter++;
                 userCounter++;
             }
             break;
         }
         case "paper" : {
             if (computerSelection == "paper"){
-                console.log("draw!!");
-                //counter = counter;
                 userCounter = userCounter;
                 computerCounter = computerCounter;
             }
             else if(computerSelection == "rock") {
-                console.log("You Win!!");
-                //counter++;
                 userCounter++;
             }
             else if(computerSelection == "scissors") {
-                console.log("You Loose!!");
-                //counter--;
                 computerCounter++;
             }
             break;
         }
         case "scissors" : {
             if (computerSelection == "scissors"){
-                console.log("draw!!");
-                //counter = counter;
                 userCounter = userCounter;
                 computerCounter = computerCounter;
             }
             else if(computerSelection == "rock") {
-                console.log("You Loose!!");
-                //counter--;
                 computerCounter++;
             }
             else if(computerSelection == "paper") {
-                console.log("You Win!!");
-                //counter++;
                 userCounter++;
             };
             break;
         }
     }
-    console.log("counter in playRound: "+userCounter+" "+computerCounter);
-    return {userCounter,computerCounter};
+    //add result to the ui
+    result.textContent = "user: " + userCounter + "computer: "+ computerCounter;
+
+    game(userCounter,computerCounter);
 }
 
-//play a 5 round game that keeps score and reports a winner or loser at the end
-function game(){
-    let userBalance = 0;
-    let computerBalance = 0;
+//game function keeps the running score for user and computer
+function game(user,computer){
+    let userCounter = user;
+    let computerCounter = computer;
     
-    for(let i=0; i<5; i++){
-        let data = playRound();
-    let userCounter = data.userCounter;
-    let computerCounter = data.computerCounter;
+    userBalance += userCounter;
+    computerBalance += computerCounter;
         
-        //let computerCounter = playRound();
-        userBalance += userCounter;
-        computerBalance += computerCounter;
-        
-        console.log ("counters in game function: "+userBalance+" "+computerBalance);
-    }
-        console.log(userBalance+ " "+computerBalance);
-    //check the winner
-    if(userBalance > computerBalance){
-        console.log("U're the winner!!");
-        return "user";
-    }else if(userBalance < computerBalance){
-        console.log("LOOSER !!");
-        return "comp";
-    }else{
-        console.log("draw!");
-        return "draw";
-    }
+    checkWinner(userBalance,computerBalance);
+}
 
-    /*console.log(userBalance+ " "+computerBalance);
-    //checkWinner();
-    return {userBalance,computerBalance};*/
-}
-/*let checkWinner=function(){
-    let info = game();
-    let user = info.userBalance;
-    let computer = info.computerBalance;
-    if(user > computer){
-        console.log("U're the winner!!");
-        //return "user";
-    }else if(user < computer){
-        console.log("LOOSER !!");
-        //return "comp";
+//announce a winner of the game once one player reaches 5 points.
+ function checkWinner(userTotalBalance,computerTotalBalance){
+
+     let user = userTotalBalance;
+     let computer = computerTotalBalance;
+    
+    if(user >= 5){
+        console.log("congrats");
+        userBalance = 0;
+        computerBalance = 0;
+    }else if(computer >= 5){
+        console.log("LOOSER");
+        userBalance = 0;
+        computerBalance = 0;
     }else{
-        console.log("draw!");
-        //return "draw";
+        return
     }
-}
-console.log(checkWinner);*/
+ }
