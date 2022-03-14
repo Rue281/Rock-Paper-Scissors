@@ -1,19 +1,32 @@
 let rock = document.querySelector(".rock");
 rock.addEventListener("click",function (){
+    let element = rock.firstElementChild;
+
+    addAnimation(element);
+
     playRound("rock");
 });
 
 let paper = document.querySelector(".paper");
 paper.addEventListener("click",function (){
+    let element = paper.firstElementChild;
+
+    addAnimation(element);
+
     playRound("paper");
 });
 
 let scissors = document.querySelector(".scissors");
 scissors.addEventListener("click",function (){
+    let element = scissors.firstElementChild;
+
+    addAnimation(element);
+
     playRound("scissors");
 });
 
-let result = document.querySelector(".result");
+let userScore = document.querySelector(".userScore");
+let computerScore = document.querySelector(".computerScore");
 
 //for game function
 let userBalance = 0;
@@ -21,6 +34,14 @@ let computerBalance = 0;
 
 let elements = ["rock","paper","scissors"];
 
+
+//add animation to button
+function addAnimation(element){
+    element.classList.add("fa-beat-fade");
+    setTimeout(function() {
+        element.classList.remove("fa-beat-fade");
+     }, 300, element);
+}
 
 //generate random play
 function computerPlay(){
@@ -80,13 +101,14 @@ function playRound(player){
             break;
         }
     }
-    //add result to the ui
-    result.textContent = "user: " + userCounter + "computer: "+ computerCounter;
+    //add score to the ui
+    userScore.textContent = userCounter;
+    computerScore.textContent = computerCounter;
 
     game(userCounter,computerCounter);
 }
 
-//game function keeps the running score for user and computer
+//to keep the running score for user and computer
 function game(user,computer){
     let userCounter = user;
     let computerCounter = computer;
@@ -97,18 +119,38 @@ function game(user,computer){
     checkWinner(userBalance,computerBalance);
 }
 
-//announce a winner of the game once one player reaches 5 points.
+//to announce the winner once one player reaches 5 points.
  function checkWinner(userTotalBalance,computerTotalBalance){
 
      let user = userTotalBalance;
      let computer = computerTotalBalance;
-    
+
+     //display final result to ui
+     let finalScore = document.createElement("div");
+
+     //add styling to final score
+     let finalScoreColor = finalScore.style.color = "#02386E";
+     let finalScoreFontSize = finalScore.style.fontSize = "50px"
+     let finalScoreFontStyle = finalScore.style.fontFamily = "system-ui"
+     let finalScoreWeight = finalScore.style.fontWeight = "bold";
+     let finalScoreDisplay = finalScore.style.display = "flex";
+     let finalScoreContent = finalScore.style.justifyContent = "center";
+     let finalScoreItems = finalScore.style.alignItems = "center";
+     let finalScoreWidth = finalScore.style.width = "100%";
+     let finalScorePadding = finalScore.style.padding = "20px";
+
+     let score = document.querySelector(".score");
+     
     if(user >= 5){
-        console.log("congrats");
+        finalScore.innerText = "CONGRATS !!";
+        //score.appendChild(finalScore);
+        document.body.appendChild(finalScore);
         userBalance = 0;
         computerBalance = 0;
     }else if(computer >= 5){
-        console.log("LOOSER");
+        finalScore.innerText = "LOOSER !!";
+        //score.appendChild(finalScore);
+        document.body.appendChild(finalScore);
         userBalance = 0;
         computerBalance = 0;
     }else{
