@@ -34,6 +34,21 @@ let computerBalance = 0;
 
 let elements = ["rock","paper","scissors"];
 
+let finalScore = document.createElement("div");
+
+     //add styling to final score
+     let finalScoreColor = finalScore.style.color = "#02386E";
+     let finalScoreFontSize = finalScore.style.fontSize = "50px"
+     let finalScoreFontStyle = finalScore.style.fontFamily = "system-ui"
+     let finalScoreWeight = finalScore.style.fontWeight = "bold";
+     let finalScoreDisplay = finalScore.style.display = "flex";
+     let finalScoreContent = finalScore.style.justifyContent = "center";
+     let finalScoreItems = finalScore.style.alignItems = "center";
+     let finalScoreWidth = finalScore.style.width = "100%";
+     let finalScorePadding = finalScore.style.padding = "20px";
+
+     let score = document.querySelector(".score");
+
 
 //add animation to button
 function addAnimation(element){
@@ -53,59 +68,67 @@ function computerPlay(){
 
 //a function that plays a single round of Rock Paper Scissors
 function playRound(player){
-    let userCounter = 0;
-    let computerCounter = 0;
 
-    let playerSelection = player;
-    let computerSelection = computerPlay();
+    //check if there is result phrase from last round
+    if(document.body.contains(finalScore)){document.body.removeChild(finalScore);}
+    else{
 
-    //compare player's play to computer play
-    switch(playerSelection){
-        case "rock": {
-            if (computerSelection == "rock"){
-                userCounter = userCounter;
-                computerCounter = computerCounter;
+
+
+        let userCounter = 0;
+        let computerCounter = 0;
+
+        let playerSelection = player;
+        let computerSelection = computerPlay();
+
+        //compare player's play to computer play
+        switch(playerSelection){
+            case "rock": {
+                if (computerSelection == "rock"){
+                    userCounter = userCounter;
+                    computerCounter = computerCounter;
+                }
+                else if(computerSelection == "paper") {
+                    computerCounter++;
+                }
+                else if(computerSelection == "scissors") {
+                    userCounter++;
+                }
+                break;
             }
-            else if(computerSelection == "paper") {
-                computerCounter++;
+            case "paper" : {
+                if (computerSelection == "paper"){
+                    userCounter = userCounter;
+                    computerCounter = computerCounter;
+                }
+                else if(computerSelection == "rock") {
+                    userCounter++;
+                }
+                else if(computerSelection == "scissors") {
+                    computerCounter++;
+                }
+                break;
             }
-            else if(computerSelection == "scissors") {
-                userCounter++;
+            case "scissors" : {
+                if (computerSelection == "scissors"){
+                    userCounter = userCounter;
+                    computerCounter = computerCounter;
+                }
+                else if(computerSelection == "rock") {
+                    computerCounter++;
+                }
+                else if(computerSelection == "paper") {
+                    userCounter++;
+                };
+                break;
             }
-            break;
         }
-        case "paper" : {
-            if (computerSelection == "paper"){
-                userCounter = userCounter;
-                computerCounter = computerCounter;
-            }
-            else if(computerSelection == "rock") {
-                userCounter++;
-            }
-            else if(computerSelection == "scissors") {
-                computerCounter++;
-            }
-            break;
-        }
-        case "scissors" : {
-            if (computerSelection == "scissors"){
-                userCounter = userCounter;
-                computerCounter = computerCounter;
-            }
-            else if(computerSelection == "rock") {
-                computerCounter++;
-            }
-            else if(computerSelection == "paper") {
-                userCounter++;
-            };
-            break;
-        }
+        //add score to the ui
+        userScore.textContent = userCounter;
+        computerScore.textContent = computerCounter;
+
+        game(userCounter,computerCounter);
     }
-    //add score to the ui
-    userScore.textContent = userCounter;
-    computerScore.textContent = computerCounter;
-
-    game(userCounter,computerCounter);
 }
 
 //to keep the running score for user and computer
@@ -126,20 +149,7 @@ function game(user,computer){
      let computer = computerTotalBalance;
 
      //display final result to ui
-     let finalScore = document.createElement("div");
-
-     //add styling to final score
-     let finalScoreColor = finalScore.style.color = "#02386E";
-     let finalScoreFontSize = finalScore.style.fontSize = "50px"
-     let finalScoreFontStyle = finalScore.style.fontFamily = "system-ui"
-     let finalScoreWeight = finalScore.style.fontWeight = "bold";
-     let finalScoreDisplay = finalScore.style.display = "flex";
-     let finalScoreContent = finalScore.style.justifyContent = "center";
-     let finalScoreItems = finalScore.style.alignItems = "center";
-     let finalScoreWidth = finalScore.style.width = "100%";
-     let finalScorePadding = finalScore.style.padding = "20px";
-
-     let score = document.querySelector(".score");
+     
      
     if(user >= 5){
         finalScore.innerText = "CONGRATS !!";
