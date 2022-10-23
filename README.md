@@ -1,6 +1,6 @@
 # Rock-Paper-Scissors
 
-## [Live Demo](https://rue281.github.io/Admin-Dashboard/)
+## [Live Demo](https://rue281.github.io/Rock-Paper-Scissors/)
 
 
 
